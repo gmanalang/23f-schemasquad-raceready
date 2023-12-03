@@ -151,7 +151,7 @@ CREATE TABLE SponsorStation
 CREATE TABLE BillingInfo
 (
    cardNumber         BIGINT,
-   cardExpirationDate DATE        NOT NULL,
+   cardExpirationDate varchar(10) NOT NULL,
    cardSecurityCode   INT         NOT NULL,
    billingStreet      varchar(50) NOT NULL,
    billingCity        varchar(50) NOT NULL,

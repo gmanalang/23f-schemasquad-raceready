@@ -12,7 +12,7 @@ CREATE TABLE Runner
    runnerID       INT AUTO_INCREMENT,
    firstName      varchar(30)             NOT NULL,
    lastName       varchar(30)             NOT NULL,
-   gender         ENUM ('Male', 'Female', 'Other') NOT NULL,
+   gender         ENUM ('Male', 'Female', 'Non-binary', 'Agender', 'Bigender') NOT NULL,
    age            INT                     NOT NULL,
    email          varchar(50)             NOT NULL,
    phone          varchar(15)             NOT NULL,
@@ -91,6 +91,7 @@ CREATE TABLE Police
 CREATE TABLE Race
 (
    raceID      INT AUTO_INCREMENT,
+   name        varchar(50)  NOT NULL,
    street      varchar(50)  NOT NULL,
    city        varchar(50)  NOT NULL,
    state       varchar(50)  NOT NULL,

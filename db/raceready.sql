@@ -91,7 +91,7 @@ CREATE TABLE Police
 CREATE TABLE Race
 (
    raceID      INT AUTO_INCREMENT,
-   name varchar(50) NOT NULL,
+   name        varchar(50)  NOT NULL,
    street      varchar(50)  NOT NULL,
    city        varchar(50)  NOT NULL,
    state       varchar(50)  NOT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE SponsorStation
 CREATE TABLE BillingInfo
 (
    cardNumber         BIGINT,
-   cardExpirationDate varchar(10)        NOT NULL,
+   cardExpirationDate varchar(10) NOT NULL,
    cardSecurityCode   INT         NOT NULL,
    billingStreet      varchar(50) NOT NULL,
    billingCity        varchar(50) NOT NULL,
@@ -286,7 +286,7 @@ CREATE TABLE Sponsor_Sponsors_Race
 (
    raceID          INT,
    sponsorID       INT,
-   companyOverview varchar(500) NOT NULL,
+   companyOverview varchar(300) NOT NULL,
    websiteLink     varchar(100) NOT NULL,
    CONSTRAINT PRIMARY KEY (raceID, sponsorID),
    CONSTRAINT FOREIGN KEY (raceID) REFERENCES Race (raceID)

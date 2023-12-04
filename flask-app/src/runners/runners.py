@@ -21,6 +21,7 @@ def get_registered(raceID, runnerID):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Register runner for certain race
 @runners.route('/runners', methods=['POST'])
 def register_runner_for_race():
     
@@ -44,3 +45,13 @@ def register_runner_for_race():
     db.get_db().commit()
     
     return 'Success!'
+
+# Remove a runner's registration for a race
+@runners.route('/runners/<raceID>/<runnerID>', methods=['DELETE'])
+def unregister_runner_for_race(raceID, runnerID):
+    cursor = db.get_db().cursor()
+    query = 'DELETE FROM Runner_RegistersFor_Race WHERE raceID = %s AND runnerID = %s'
+    cursor.execute(query, (raceID, runnerID))
+    db.get_db().commit()
+    
+    return 'Success! Runner unregistered for the race.'

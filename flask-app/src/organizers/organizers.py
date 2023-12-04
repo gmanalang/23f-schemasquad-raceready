@@ -43,7 +43,7 @@ def get_vendor_details(vendorID):
 #     query = 'SELECT p.name FROM Vendor JOIN WHERE vendorID = ' + str(vendorID)
 #     query = '''
 #       SELECT DISTINCT p.name
-#       FROM Race r JOIN EventOrganizer e ON r JOIN Organizer_CommunicatesWith_Police ocwp ON e.raceID
+#       FROM Race r JOIN EventOrganizer e ON r.organizerID =  JOIN Organizer_CommunicatesWith_Police ocwp ON e.raceID
 #       WHERE category IS NOT NULL
 #       ORDER BY category
 #     '''

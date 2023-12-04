@@ -55,3 +55,20 @@ def unregister_runner_for_race(raceID, runnerID):
     db.get_db().commit()
     
     return 'Success! Runner unregistered for the race.'
+
+# Return a list of all races
+@runners.route('/races', methods=['GET'])
+
+def get_races():
+  cursor = db.get_db().cursor()
+  cursor.execute('SELECT name, street, city, state, country, zip, date, terrainType FROM Race')
+
+  column_headers = [x[0] for x in cursor.description]
+
+  json_data = []
+  theData = cursor.fetchall()
+  
+  for row in theData:
+    json_data.append(dict(zip(column_headers, row)))
+    
+  return jsonify(json_data)

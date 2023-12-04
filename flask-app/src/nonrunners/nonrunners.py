@@ -173,6 +173,7 @@ def get_vol_stations(raceID, volunteerID):
 
     return jsonify(json_data)
 
+# Post a new volunteer assignment for a first-aid station
 @nonrunners.route('/firstaid', methods=['POST'])
 def assign_new_firstaid_station():
     # Collecting data from the request object 
@@ -186,6 +187,32 @@ def assign_new_firstaid_station():
 
     # Constructing the query
     query = 'INSERT INTO Volunteer_VolunteersFor_FirstAidStation VALUES ("'
+    query += str(vol) + '", "'
+    query += str(station) + '", "'
+    query += str(race) + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+
+# Post a new volunteer assignment for a refuel station
+@nonrunners.route('/refuel', methods=['POST'])
+def assign_new_refuel_station():
+    # Collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    vol = the_data['volunteerID']
+    station = the_data['stationID']
+    race = the_data['raceID']
+
+    # Constructing the query
+    query = 'INSERT INTO Volunteer_VolunteersFor_RefuelStation VALUES ("'
     query += str(vol) + '", "'
     query += str(station) + '", "'
     query += str(race) + '")'

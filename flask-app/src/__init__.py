@@ -37,6 +37,8 @@ def create_app():
     from src.products.products  import products
     from src.registers.registers import registers
     from src.organizers.organizers import organizers
+    from src.volunteers.volunteers import volunteers
+
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
@@ -44,6 +46,7 @@ def create_app():
     app.register_blueprint(products,    url_prefix='/p')
     app.register_blueprint(registers, url_prefix='/reg')
     app.register_blueprint(organizers, url_prefix='/org')
+    app.register_blueprint(volunteers, url_prefix='/vol')
 
     # Don't forget to return the app object
     return app

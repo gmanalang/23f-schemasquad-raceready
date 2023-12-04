@@ -1,12 +1,12 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
 
-registers = Blueprint('registers', __name__)
+runners = Blueprint('runners', __name__)
 
 # Get all runner registers from the DB
-@registers.route('/runners/<raceID>/<runnerID>', methods=['GET'])
+@runners.route('/runners/<raceID>/<runnerID>', methods=['GET'])
 def get_registers(raceID, runnerID):
     cursor = db.get_db().cursor()
     cursor.execute('select runnerID, raceID from Runner_RegistersFor_Race')
@@ -21,7 +21,7 @@ def get_registers(raceID, runnerID):
     return the_response
 
 # Get customer detail for customer with particular userID
-@registers.route('/registers/<userID>', methods=['GET'])
+@runners.route('/registers/<userID>', methods=['GET'])
 def get_customer(userID):
     cursor = db.get_db().cursor()
     cursor.execute('select * from registers where id = {0}'.format(userID))

@@ -31,11 +31,11 @@ def get_volunteers():
 
     return jsonify(json_data)
 
-# Get all the volunteers from the database
+# Get all the volunteers for a particular race from the database
 @nonrunners.route('/registered/<raceID>', methods=['GET'])
 def get_vols(raceID):
     # use cursor to query the database for a list of volunteers
-    query = 'SELECT volunteerID FROM Volunteer_RegistersFor_Race WHERE raceID =' + str(raceID)
+    query = 'SELECT Volunteer.volunteerID FROM Volunteer_RegistersFor_Race JOIN Volunteer WHERE raceID =' + str(raceID)
     current_app.logger.info(query)
     cursor = db.get_db().cursor()
     cursor.execute(query)

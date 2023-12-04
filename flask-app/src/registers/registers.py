@@ -5,8 +5,8 @@ from src import db
 
 registers = Blueprint('registers', __name__)
 
-# Get all registers from the DB
-@registers.route('/registers/<raceID>/<runnerID>', methods=['GET'])
+# Get all runner registers from the DB
+@registers.route('/runners/<raceID>/<runnerID>', methods=['GET'])
 def get_registers(raceID, runnerID):
     cursor = db.get_db().cursor()
     cursor.execute('select runnerID, raceID from Runner_RegistersFor_Race')

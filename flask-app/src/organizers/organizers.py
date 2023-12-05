@@ -37,28 +37,32 @@ def get_vendor_details(vendorID):
         json_data.append(dict(zip(column_headers, row)))
     return jsonify(json_data)
 
-# # Get all police departments assisting a specific race
-# @organizers.route('/police/<raceID>', methods=['GET'])
-# def get_police_department_names(raceID):
-#     query = 'SELECT p.name FROM Vendor JOIN WHERE vendorID = ' + str(vendorID)
-#     query = '''
-#       SELECT DISTINCT p.name
-#       FROM Race r JOIN EventOrganizer e ON r.organizerID =  JOIN Organizer_CommunicatesWith_Police ocwp ON e.raceID
-#       WHERE category IS NOT NULL
-#       ORDER BY category
-#     '''
-#     current_app.logger.info(query)
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query)
+# Get all police departments assisting a specific race
+@organizers.route('/police/<raceID>', methods=['GET'])
+def get_police_department_names(raceID):
+    query = '''
+      SELECT p.Name, p.phone
+      FROM Police AS p
+      JOIN Organizer_CommunicatesWith_Police AS o
+      ON p.policeID = o.policeID
+      JOIN EventOrganizer AS org
+      ON o.organizerID = org.organizerID
+      JOIN Race AS r
+      ON org.organizerID = r.organizerID
+      WHERE r.raceID = ''' + str(raceID)
+    
+    current_app.logger.info(query)
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
 
-#     column_headers = [x[0] for x in cursor.description]
+    column_headers = [x[0] for x in cursor.description]
 
-#     json_data = []
-#     the_data = cursor.fetchall()
+    json_data = []
+    the_data = cursor.fetchall()
 
-#     for row in the_data:
-#         json_data.append(dict(zip(column_headers, row)))
-#     return jsonify(json_data)
+    for row in the_data:
+        json_data.append(dict(zip(column_headers, row)))
+    return jsonify(json_data)
 
 
 # # Getting a sponsor's promotional post for a race post

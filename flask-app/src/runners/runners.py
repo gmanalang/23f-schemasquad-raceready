@@ -28,6 +28,15 @@ def get_registered(raceID, runnerID):
     theData = cursor.fetchall()
     for row in theData:
         json_data.append(dict(zip(row_headers, row)))
+        
+    if not json_data:
+        # If json_data is empty, return an error response
+        error_response = make_response(jsonify({"error": "Runner not registered for the specified race"}))
+        error_response.status_code = 418  # You can choose an appropriate status code
+        error_response.mimetype = 'application/json'
+        return error_response
+    
+    
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
@@ -42,8 +51,8 @@ def register_runner_for_race():
     current_app.logger.info(the_data)
 
     #extracting the variable
-    raceID = the_data['race_id']
-    runnerID = the_data['runner_id']
+    raceID = str(the_data['race_id'])
+    runnerID = str(the_data['runner_id'])
 
     # Constructing the query
     query = 'insert into Runner_RegistersFor_Race (runnerID, raceID) values ("'
@@ -57,6 +66,23 @@ def register_runner_for_race():
     db.get_db().commit()
     
     return 'Success!'
+
+# get all the registered races by name
+@runners.route('/runners/<runnerID>', methods=['GET'])
+def get_registered_races(runnerID):
+    cursor = db.get_db().cursor()
+    query = 'SELECT Race.* from Runner_RegistersFor_Race JOIN Race on Runner_RegistersFor_Race.raceID = Race.raceID WHERE Runner_RegistersFor_Race.runnerID = %s;'
+    cursor.execute(query, (runnerID))
+    db.get_db().commit()
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 # Remove a runner's registration for a race
 @runners.route('/runners/<raceID>/<runnerID>', methods=['DELETE'])
@@ -182,8 +208,12 @@ def get_result(raceID, runnerID):
 @runners.route('/races', methods=['GET'])
 
 def get_races():
+  query = '''
+  SELECT name, city, state, date, raceLength from Race
+  '''
+  current_app.logger.info(query)
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT name, city, state, date, raceLength FROM Race')
+  cursor.execute(query)
 
   column_headers = [x[0] for x in cursor.description]
 
@@ -200,12 +230,15 @@ def get_races():
 
 def get_specific_race(raceID):
   query = '''
-    SELECT 
-    r.name, r.street, r.city, r.state, r.country, r.zip, r.date, 
-    r.terrainType, r.raceLength, r.maxRunners, r.checkInTime, o.name AS "hosted by:"
-    FROM Race AS r JOIN EventOrganizer AS o
-    ON r.organizerID = o.organizerID
-    WHERE r.raceID = ''' + str(raceID)
+  SELECT
+  r.name, r.street, r.city, r.state, r.country, r.zip, r.date, 
+  r.terrainType, r.raceLength, r.maxRunners, r.checkInTime,
+  o.name AS "hosted by", fa.services, fa.venueSpot AS "first-aid venue spot",
+  rs.amenities, rs.venueSpot AS "refuel station venue spot"
+  FROM Race AS r JOIN EventOrganizer AS o ON r.organizerID = o.organizerID
+  JOIN FirstAidStation AS fa ON r.raceID = fa.raceID
+  JOIN RefuelStation AS rs ON r.raceID = rs.raceID
+  WHERE r.raceID = ''' + str(raceID)
   
   current_app.logger.info(query)
   cursor = db.get_db().cursor()

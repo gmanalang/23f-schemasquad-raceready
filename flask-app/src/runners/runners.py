@@ -141,36 +141,6 @@ def get_result(raceID, runnerID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Check result for a certain race
-@runners.route('/results/<raceID>/<runnerID>', methods=['GET'])
-def get_result(raceID, runnerID):
-    cursor = db.get_db().cursor()
-    query = 'SELECT finishTime FROM RaceResults WHERE raceID = %s AND runnerID = %s'
-    cursor.execute(query, (raceID, runnerID))
-    # row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        # Convert timedelta to string using the custom function
-        formatted_time = format_timedelta(row[0])
-        json_data.append({'finishTime': formatted_time})
-        
-    cursor = db.get_db().cursor()
-    query = 'SELECT marker, mileSplit FROM MileSplits WHERE raceID = %s AND runnerID = %s'
-    cursor.execute(query, (raceID, runnerID))
-    # row_headers = [x[0] for x in cursor.description]
-    theData = cursor.fetchall()
-    for row in theData:
-        marker_name = row[0]
-        # Convert timedelta to string using the custom function
-        formatted_time = format_timedelta(row[1])
-        json_data.append({marker_name: formatted_time})
-        
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
 # Return a list of all races
 @runners.route('/races', methods=['GET'])
 

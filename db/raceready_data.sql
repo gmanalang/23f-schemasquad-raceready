@@ -416,6 +416,7 @@ INSERT INTO RefuelStation VALUES(47,'80 David Avenue','Water Station',45);
 INSERT INTO RefuelStation VALUES(48,'0661 Ohio Avenue','Energy Gels Station',44);
 INSERT INTO RefuelStation VALUES(49,'132 Village Green Junction','Water Station',36);
 INSERT INTO RefuelStation VALUES(50,'574 Columbus Circle','Protein Bar Stand',26);
+INSERT INTO RefuelStation VALUES(51, '291 Light Ave', 'Smoothie Bar', 33);
 
 -- FirstAidStation sample data
 INSERT INTO FirstAidStation VALUES(1,'74 Sachtjen Parkway','Emergency Medical Care',17);

@@ -140,3 +140,93 @@ def get_result(raceID, runnerID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+# Check if runner is checked in for certain race
+@runners.route('/checkIns/<raceID>/<runnerID>', methods=['GET'])
+def get_checkedin(raceID, runnerID):
+    cursor = db.get_db().cursor()
+    query = 'SELECT runnerID, raceID, bib_number FROM Runner_ChecksInto_Race WHERE raceID = %s AND runnerID = %s'
+    cursor.execute(query, (raceID, runnerID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# Check in runner for certain race
+@runners.route('/checkIns', methods=['POST'])
+def checkin_runner_for_race():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    raceID = the_data['race_id']
+    runnerID = the_data['runner_id']
+    bibNumber = the_data['bib_number']
+
+    # Constructing the query
+    query = 'insert into Runner_ChecksInto_Race (runnerID, raceID, bib_number) values ("'
+    query += runnerID + '", "'
+    query += raceID + '", "'
+    query += bibNumber + '")'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+
+# Check result for a certain race
+@runners.route('/results/<raceID>/<runnerID>', methods=['GET'])
+def get_result(raceID, runnerID):
+    cursor = db.get_db().cursor()
+    query = 'SELECT finishTime FROM RaceResults WHERE raceID = %s AND runnerID = %s'
+    cursor.execute(query, (raceID, runnerID))
+    # row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        # Convert timedelta to string using the custom function
+        formatted_time = format_timedelta(row[0])
+        json_data.append({'finishTime': formatted_time})
+        
+    cursor = db.get_db().cursor()
+    query = 'SELECT marker, mileSplit FROM MileSplits WHERE raceID = %s AND runnerID = %s'
+    cursor.execute(query, (raceID, runnerID))
+    # row_headers = [x[0] for x in cursor.description]
+    theData = cursor.fetchall()
+    for row in theData:
+        marker_name = row[0]
+        # Convert timedelta to string using the custom function
+        formatted_time = format_timedelta(row[1])
+        json_data.append({marker_name: formatted_time})
+        
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# Return a list of all races
+@runners.route('/races', methods=['GET'])
+
+def get_races():
+  cursor = db.get_db().cursor()
+  cursor.execute('SELECT name, street, city, state, country, zip, date, terrainType FROM Race')
+
+  column_headers = [x[0] for x in cursor.description]
+
+  json_data = []
+  theData = cursor.fetchall()
+  
+  for row in theData:
+    json_data.append(dict(zip(column_headers, row)))
+    
+  return jsonify(json_data)

@@ -62,6 +62,7 @@ def get_police_department_names(raceID):
 
     for row in the_data:
         json_data.append(dict(zip(column_headers, row)))
+        
     return jsonify(json_data)
 
 
@@ -128,3 +129,39 @@ def event_organizer_creates_race():
     db.get_db().commit()
     
     return 'Success!'
+
+# Update some of the details of a race
+@organizers.route('/races/<raceID>', methods=['PUT'])
+def update_race_post(raceID):
+    
+    the_data = request.json
+    current_app.logger.info(the_data)
+    
+    newRaceDate = the_data['date']
+    newMaxRunners = the_data['maxRunners']
+    newCheckInTime = the_data['checkInTime']
+
+    query = 'UPDATE Race SET '
+    query += 'date = "' + str(newRaceDate) + '", '
+    query += 'maxRunners = "' + str(newMaxRunners) + '", '
+    query += 'checkInTime = "' + str(newCheckInTime) + '" '
+    query += 'WHERE raceID = ' + str(raceID)
+
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Successfully updated the race!'
+
+# Delete a race post from the website if a race is no longer happening
+@organizers.route('/races/<raceID>', methods=['DELETE'])
+def delete_race_post(raceID):
+    query = 'DELETE FROM Race WHERE raceID = ' + str(raceID) + ';'
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success! Race post deleted.'

@@ -141,12 +141,39 @@ def get_result(raceID, runnerID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Return a list of all races
+# Return a list of all races with basic information like its name,
+# location (city and state), date, and race length
 @runners.route('/races', methods=['GET'])
 
 def get_races():
   cursor = db.get_db().cursor()
   cursor.execute('SELECT name, city, state, date, raceLength FROM Race')
+
+  column_headers = [x[0] for x in cursor.description]
+
+  json_data = []
+  theData = cursor.fetchall()
+  
+  for row in theData:
+    json_data.append(dict(zip(column_headers, row)))
+    
+  return jsonify(json_data)
+
+# Return more specific information about a specific race
+@runners.route('/races/<raceID>', methods=['GET'])
+
+def get_specific_race(raceID):
+  query = '''
+    SELECT 
+    r.name, r.street, r.city, r.state, r.country, r.zip, r.date, 
+    r.terrainType, r.raceLength, r.maxRunners, r.checkInTime, o.name AS "hosted by:"
+    FROM Race AS r JOIN EventOrganizer AS o
+    ON r.organizerID = o.organizerID
+    WHERE r.raceID = ''' + str(raceID)
+  
+  current_app.logger.info(query)
+  cursor = db.get_db().cursor()
+  cursor.execute(query)
 
   column_headers = [x[0] for x in cursor.description]
 

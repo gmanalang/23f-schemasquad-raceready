@@ -365,3 +365,62 @@ def check_registration(volunteerID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+#Register a volunteer for a certain race
+@nonrunners.route('/registrations/<volunteerID>', methods=['POST'])
+def register_volunteer(volunteerID):
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    id = the_data['volunteerID']
+    first = the_data['firstName']
+    last = the_data['lastName']
+    age = the_data['age']
+    email = the_data['email']
+    phone = the_data['phone']
+    street = the_data['street']
+    city = the_data['city']
+    state = the_data['state']
+    country = the_data['country']
+    zip = the_data['zip']
+
+    query = 'INSERT INTO Volunteer VALUES ("'
+    query += str(id) + '", "'
+    query += str(first) + '", "'
+    query += str(last) + '", "'
+    query += str(age) + '", "'
+    query += str(email) + '", "'
+    query += str(phone) + '", "'
+    query += str(street) + '", "'
+    query += str(city) + '", "'
+    query += str(state) + '", "'
+    query += str(country) + '", "'
+    query += str(zip) + '")'
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+
+#Check a specific volunteer into a specific race
+@nonrunners.route('/checkins/<raceID>/<volunteerID>', methods=['POST'])
+def check_in_vol(raceID, volunteerID):
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    race = the_data['raceID']
+    vol = the_data['volunteerID']
+
+    query = 'INSERT INTO Volunteer_ChecksIntoRace VALUES ("'
+    query += str(race) + '", "'
+    query += str(vol) + '")'
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'

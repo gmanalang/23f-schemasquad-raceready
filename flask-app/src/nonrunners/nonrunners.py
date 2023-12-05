@@ -272,8 +272,8 @@ def get_posts(raceID, sponsorID):
     cursor = db.get_db().cursor()
     query = '''
         SELECT s.name, ssr.companyOverview, ssr.websiteLink
-        FROM Sponsor_Sponsors_Race ssr JOIN Sponsor s ON ssr.sponsorID = s.sponsorID
-                                    JOIN Race r ON ssr.raceID = r.raceID
+        FROM Sponsor s JOIN Sponsor_Sponsors_Race ssr ON s.sponsorID = ssr.sponsorID
+                       JOIN Race r ON ssr.raceID = r.raceID
         WHERE raceID = %s AND sponsorID = %s
     '''
     cursor.execute(query, (raceID, sponsorID))

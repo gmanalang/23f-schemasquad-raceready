@@ -111,6 +111,42 @@ def checkin_runner_for_race():
     
     return 'Success!'
 
+@runners.route('/profiles/<runnerID>', methods=['GET'])
+def get_profile(runnerID):
+    cursor = db.get_db().cursor()
+    query = 'SELECT firstName, lastName, gender, age, email, phone, street, city, state, country, zip FROM Runner WHERE runnerID = %s'
+    cursor.execute(query, (runnerID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response 
+
+@runners.route('/profiles/<runnerID>', methods=['PUT'])
+def update_profile(runnerID):
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    firstName = the_data['first_name']
+    lastName = the_data['last_name']
+    
+    the_query = 'UPDATE Runner SET '
+    the_query += 'firstName = "' + firstName + '", '
+    the_query += 'lastName = "' + lastName + '" '
+    the_query += 'WHERE runnerID = {0};'.format(runnerID)
+
+    current_app.logger.info(the_query)
+    
+    cursor = db.get_db().cursor()
+    cursor.execute(the_query)
+    db.get_db().commit()
+
+    return "successfully editted runner #{0}!".format(runnerID)
+
 # Check result for a certain race
 @runners.route('/results/<raceID>/<runnerID>', methods=['GET'])
 def get_result(raceID, runnerID):

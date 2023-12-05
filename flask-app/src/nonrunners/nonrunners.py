@@ -276,6 +276,11 @@ def get_posts(raceID, sponsorID):
         JOIN Race r ON ssr.raceID = r.raceID
         WHERE raceID = %s AND sponsorID = %s
     '''
+        #     SELECT companyOverview, websiteLink
+        # FROM Sponsor_Sponsors_Race ssr
+        # JOIN Sponsor s ON ssr.sponsorID = s.sponsorID
+        # JOIN Race r ON ssr.raceID = r.raceID
+        # WHERE ssr.raceID = %s AND ssr.sponsorID = %s
     cursor.execute(query, (raceID, sponsorID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -301,7 +306,7 @@ def create_post(raceID, sponsorID):
 
     # Constructing the query
 
-    query = 'INSERT INTO SponsorStationRace VALUES ("'
+    query = 'INSERT INTO Sponsor_Sponsors_Race VALUES ("'
     query += str(overview) + '", "'
     query += str(link) + '", "'
     query += str(race) + '", "'
@@ -319,7 +324,7 @@ def create_post(raceID, sponsorID):
 def update_post(raceID, sponsorID):
     cursor = db.get_db().cursor()
     query = '''
-        UPDATE SponsorStationRace
+        UPDATE Sponsor_Sponsors_Race
         SET companyOverview = %s, websiteLink = %s
         WHERE raceID = %s AND sponsorID = %s
     '''
@@ -334,7 +339,7 @@ def update_post(raceID, sponsorID):
 def delete_post(raceID, sponsorID):
     cursor = db.get_db().cursor()
     query = '''
-        DELETE FROM SponsorStationRace
+        DELETE FROM Sponsor_Sponsors_Race
         WHERE raceID = %s AND sponsorID = %s
     '''
     cursor.execute(query, (raceID, sponsorID))

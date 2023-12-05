@@ -118,7 +118,7 @@ def event_organizer_creates_race():
     query += terrainType + '", "'
     query += str(raceLength) + '", "'
     query += str(maxRunners) + '", "'
-    query += checkInTime + '", "'
+    query += str(checkInTime) + '", "'
     query += str(organizerID) + '")'
     current_app.logger.info(query)
 

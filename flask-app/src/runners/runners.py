@@ -141,21 +141,21 @@ def get_result(raceID, runnerID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Check if runner is checked in for certain race
-@runners.route('/checkIns/<raceID>/<runnerID>', methods=['GET'])
-def get_checkedin(raceID, runnerID):
-    cursor = db.get_db().cursor()
-    query = 'SELECT runnerID, raceID, bib_number FROM Runner_ChecksInto_Race WHERE raceID = %s AND runnerID = %s'
-    cursor.execute(query, (raceID, runnerID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+# # Check if runner is checked in for certain race
+# @runners.route('/checkIns/<raceID>/<runnerID>', methods=['GET'])
+# def get_checkedin(raceID, runnerID):
+#     cursor = db.get_db().cursor()
+#     query = 'SELECT runnerID, raceID, bib_number FROM Runner_ChecksInto_Race WHERE raceID = %s AND runnerID = %s'
+#     cursor.execute(query, (raceID, runnerID))
+#     row_headers = [x[0] for x in cursor.description]
+#     json_data = []
+#     theData = cursor.fetchall()
+#     for row in theData:
+#         json_data.append(dict(zip(row_headers, row)))
+#     the_response = make_response(jsonify(json_data))
+#     the_response.status_code = 200
+#     the_response.mimetype = 'application/json'
+#     return the_response
 
 # Check in runner for certain race
 @runners.route('/checkIns', methods=['POST'])
@@ -219,7 +219,7 @@ def get_result(raceID, runnerID):
 
 def get_races():
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT name, street, city, state, country, zip, date, terrainType FROM Race')
+  cursor.execute('SELECT name, city, state, date, raceLength FROM Race')
 
   column_headers = [x[0] for x in cursor.description]
 

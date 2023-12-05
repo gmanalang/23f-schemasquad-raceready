@@ -65,26 +65,6 @@ def get_police_department_names(raceID):
 
     return jsonify(json_data)
 
-
-# # Getting a sponsor's promotional post for a race post
-# @organizers.route('/races/<raceID>/<sponsorID>', methods=['GET'])
-# def get_post_content(raceID, sponsorID):
-#     cursor = db.get_db().cursor()
-#     query = '''
-#         SELECT title, content
-#         FROM Post
-#     '''
-#     cursor.execute(query)
-#     row_headers = [x[0] for x in cursor.description]
-#     json_data = []
-#     theData = cursor.fetchall()
-#     for row in theData:
-#         json_data.append(dict(zip(row_headers, row)))
-#     the_response = make_response(jsonify(json_data))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
-
 # Create a race post
 @organizers.route('/races', methods=['POST'])
 def event_organizer_creates_race():

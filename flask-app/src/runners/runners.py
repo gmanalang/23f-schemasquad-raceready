@@ -183,7 +183,7 @@ def get_result(raceID, runnerID):
 
 def get_races():
   query = '''
-  SELECT raceID, name, city, state, date, raceLength from Race
+  SELECT name, city, state, date, raceLength from Race
   '''
   current_app.logger.info(query)
   cursor = db.get_db().cursor()

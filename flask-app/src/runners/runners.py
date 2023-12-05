@@ -142,12 +142,18 @@ def get_result(raceID, runnerID):
     return the_response
 
 # Return a list of all races with basic information like its name,
-# location (city and state), date, and race length
+# location (city and state), date, and race length (the other attributes
+# are inputted for the sake of the UI; only the basic information is
+# actually shown in the UI)
 @runners.route('/races', methods=['GET'])
 
 def get_races():
+  query = '''
+  SELECT raceID, name, city, state, date, raceLength from Race
+  '''
+  current_app.logger.info(query)
   cursor = db.get_db().cursor()
-  cursor.execute('SELECT name, city, state, date, raceLength FROM Race')
+  cursor.execute(query)
 
   column_headers = [x[0] for x in cursor.description]
 
@@ -164,12 +170,15 @@ def get_races():
 
 def get_specific_race(raceID):
   query = '''
-    SELECT 
-    r.name, r.street, r.city, r.state, r.country, r.zip, r.date, 
-    r.terrainType, r.raceLength, r.maxRunners, r.checkInTime, o.name AS "hosted by:"
-    FROM Race AS r JOIN EventOrganizer AS o
-    ON r.organizerID = o.organizerID
-    WHERE r.raceID = ''' + str(raceID)
+  SELECT
+  r.name, r.street, r.city, r.state, r.country, r.zip, r.date, 
+  r.terrainType, r.raceLength, r.maxRunners, r.checkInTime,
+  o.name AS "hosted by", fa.services, fa.venueSpot AS "first-aid venue spot",
+  rs.amenities, rs.venueSpot AS "refuel station venue spot"
+  FROM Race AS r JOIN EventOrganizer AS o ON r.organizerID = o.organizerID
+  JOIN FirstAidStation AS fa ON r.raceID = fa.raceID
+  JOIN RefuelStation AS rs ON r.raceID = rs.raceID
+  WHERE r.raceID = ''' + str(raceID)
   
   current_app.logger.info(query)
   cursor = db.get_db().cursor()

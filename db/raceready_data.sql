@@ -156,6 +156,7 @@ INSERT INTO EventOrganizer VALUES(47,'Grant Inc', 'jdobbison1a@state.gov','176-2
 INSERT INTO EventOrganizer VALUES(48,'Barton-Haley', 'egilmartin1b@tinyurl.com','111-807-8890');
 INSERT INTO EventOrganizer VALUES(49,'Green-Abshire', 'gnotti1c@github.io','441-539-7775');
 INSERT INTO EventOrganizer VALUES(50,'Olson-Walter', 'mdraycott1d@com.com','908-214-1568');
+INSERT INTO EventOrganizer VALUES(51,'Tenafly Running Association', 'tra@gmail.com','201-222-2222');
 
 -- Sponsor sample data
 INSERT INTO Sponsor VALUES(1, 'Mydeo', 'gudey0@indiegogo.com', '119-950-9938', 'Sports Apparel Brands');
@@ -364,6 +365,7 @@ INSERT INTO Race VALUES(47, 'Lexington Marathon', 'Lotheville', 'Lexington', 'Ke
 INSERT INTO Race VALUES(48, 'Springfield 2k', 'International', 'Springfield', 'Illinois', 'United States', '62718', ' 2024-01-17 09:00:00', 'Road Race', 1.2, 717, ' 2024-01-17 07:00:00',36);
 INSERT INTO Race VALUES(49, 'Sarasota 2k', 'Eastwood', 'Sarasota', 'Florida', 'United States', '34238', ' 2025-08-08 11:00:00', 'Road Race', 1.2, 715, ' 2025-08-08 09:00:00',8);
 INSERT INTO Race VALUES(50, 'Honolulu 10k', 'Dorton', 'Honolulu', 'Hawaii', 'United States', '96840', '2023-05-10 13:00:00', 'Beach Run', 6.2, 748, '2023-05-10 11:00:00',4);
+INSERT INTO Race VALUES(51, 'Tenafly Marathon', 'Jefferson Park', 'Tenafly', 'New Jersey', 'United States', '07670', '2024-05-10 10:00:00', 'Road Race', 26.2, 1000, '2024-05-10 08:00:00',51);
 
 -- RefuelStation sample data
 INSERT INTO RefuelStation VALUES(1,'3452 Magdeline Lane','Protein Bar Stand',27);
@@ -625,6 +627,7 @@ INSERT INTO RaceResults VALUES(24,5706,'21:05:28',43,48);
 INSERT INTO RaceResults VALUES(18,1203,'15:05:08',5,39);
 INSERT INTO RaceResults VALUES(21,5410,'00:20:13',4,4);
 INSERT INTO RaceResults VALUES(43,1179,'01:48:19',9,30);
+INSERT INTO RaceResults VALUES(1,5000,'02:56:34',51,51);
 
 -- MileSplits sample data
 INSERT INTO MileSplits VALUES(14,2176,49,24,'1 Mile', '05:03:48');
@@ -827,7 +830,11 @@ INSERT INTO MileSplits VALUES(24,5706,43,48,'25K', '03:13:38');
 INSERT INTO MileSplits VALUES(18,1203,5,39,'30K', '02:00:44');
 INSERT INTO MileSplits VALUES(21,5410,4,4,'35K', '03:38:15');
 INSERT INTO MileSplits VALUES(43,1179,9,30,'40K', '01:41:14');
-
+INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 05', '00:35:32');
+INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 10', '01:09:45');
+INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 13.1', '01:29:13');
+INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 20', '02:16:24');
+INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 25', '02:49:59');
 
 -- Runner_RunsIn_Race sample data
 INSERT INTO Runner_RunsIn_Race VALUES(48,21);
@@ -1030,6 +1037,7 @@ INSERT INTO Runner_RunsIn_Race VALUES(39,5);
 INSERT INTO Runner_RunsIn_Race VALUES(17,14);
 INSERT INTO Runner_RunsIn_Race VALUES(32,30);
 INSERT INTO Runner_RunsIn_Race VALUES(18,30);
+INSERT INTO Runner_RunsIn_Race VALUES(1,51);
 
 -- Runner_ChecksInto_Race sample data
 INSERT INTO Runner_ChecksInto_Race VALUES(48,21,9078);
@@ -1232,6 +1240,7 @@ INSERT INTO Runner_ChecksInto_Race VALUES(39,5,9078);
 INSERT INTO Runner_ChecksInto_Race VALUES(17,14,7875);
 INSERT INTO Runner_ChecksInto_Race VALUES(32,30,3735);
 INSERT INTO Runner_ChecksInto_Race VALUES(18,30,3560);
+INSERT INTO Runner_ChecksInto_Race VALUES(1,51,5000);
 
 -- Runner_RegistersFor_Race sample data
 INSERT INTO Runner_RegistersFor_Race VALUES(6,1);
@@ -1434,6 +1443,7 @@ INSERT INTO Runner_RegistersFor_Race VALUES(41,32);
 INSERT INTO Runner_RegistersFor_Race VALUES(48,7);
 INSERT INTO Runner_RegistersFor_Race VALUES(34,49);
 INSERT INTO Runner_RegistersFor_Race VALUES(3,45);
+INSERT INTO Runner_RegistersFor_Race VALUES(1,51);
 
 -- Volunteer_ChecksInto_Race sample data
 INSERT INTO Volunteer_ChecksInto_Race VALUES(26,46);

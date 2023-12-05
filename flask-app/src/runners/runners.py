@@ -178,9 +178,7 @@ def get_result(raceID, runnerID):
     return the_response
 
 # Return a list of all races with basic information like its name,
-# location (city and state), date, and race length (the other attributes
-# are inputted for the sake of the UI; only the basic information is
-# actually shown in the UI)
+# location (city and state), date, and race length
 @runners.route('/races', methods=['GET'])
 
 def get_races():

@@ -198,6 +198,13 @@ def get_result(raceID, runnerID):
         formatted_time = format_timedelta(row[1])
         json_data.append({marker_name: formatted_time})
         
+    if not json_data:
+        # If json_data is empty, return an error response
+        error_response = make_response(jsonify({"error": "Runner did not run for the specified race"}))
+        error_response.status_code = 418  # You can choose an appropriate status code
+        error_response.mimetype = 'application/json'
+        return error_response
+        
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'

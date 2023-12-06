@@ -225,6 +225,101 @@ def assign_new_refuel_station():
     
     return 'Success!'
 
+
+# Get contact info for all volunteers from a particular race from the database
+@nonrunners.route('/contactvol/<raceID>', methods=['GET'])
+def get_contacts_of_vol(raceID):
+    # use cursor to query the database for a list of volunteers
+    query = '''
+    SELECT vol.firstName, vol.lastName, vol.phone, vol.email
+    FROM Volunteer_RegistersFor_Race
+    JOIN Volunteer AS vol
+    ON Volunteer_RegistersFor_Race.volunteerID = vol.volunteerID
+    WHERE raceID = ''' + str(raceID)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+
+    # grab the column headers from the returned data
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)
+
+#Register a volunteer for a certain race
+@nonrunners.route('/raceregister', methods=['POST'])
+def register_volunteer_for_race():
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    # Extracting the variables
+    volID = the_data['volunteerID']
+    raceID = the_data['raceID']
+
+    query = 'INSERT INTO Volunteer_RegistersFor_Race VALUES ("'
+    query += str(volID) + '", "'
+    query += str(raceID) + '")'
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
+
+
+# Return a list of all races with basic information like its name,
+# location (city and state), date, and race length
+@nonrunners.route('/allraces', methods=['GET'])
+def get_allraces():
+  cursor = db.get_db().cursor()
+  cursor.execute('SELECT raceID, name, city, state, date, raceLength FROM Race')
+
+  column_headers = [x[0] for x in cursor.description]
+
+  json_data = []
+  theData = cursor.fetchall()
+
+  for row in theData:
+    json_data.append(dict(zip(column_headers, row)))
+
+  return jsonify(json_data)
+
+# # Return a list of all races with basic information like its name,
+# # location (city and state), date, and race length
+@nonrunners.route('/volraces/<volunteerID>', methods=['GET'])
+def get_volraces(volunteerID):
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT r.raceID, name, city, state, date
+        FROM Race AS r
+        JOIN Volunteer_RegistersFor_Race as vr ON r.raceID = vr.raceID
+        WHERE vr.volunteerID = %s
+    '''
+    cursor.execute(query, (volunteerID,))
+
+    column_headers = [x[0] for x in cursor.description]
+
+    json_data = []
+    theData = cursor.fetchall()
+
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)
+
+
 # Return venue spot of a sponsor's promotional table at a race
 @nonrunners.route('/stations/<raceID>/<sponsorID>', methods=['GET'])
 def get_stations(raceID, sponsorID):

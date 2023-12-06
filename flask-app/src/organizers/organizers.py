@@ -139,30 +139,6 @@ def delete_race_post(raceID):
     
     return 'Successfully deleted a race post!'
 
-# @organizers.route('/results/<raceID>/<runnerID>', methods=['GET'])
-# def get_race_results_of_runner(raceID, runnerID):
-#   query = '''
-#   SELECT
-#   r.firstName, r.lastName, rr.bibNumber, rr.finishTime, ms.marker, ms.mileSplit
-#   FROM Runner AS r JOIN Runner_RunsIn_Race AS rrir ON r.runnerID = rrir.runnerID
-#   JOIN Race As ra ON rrir.raceID = ra.raceID
-#   JOIN RaceResults As rr ON ra.raceID = rr.raceID
-#   JOIN MileSplits AS ms ON rr.raceID = ms.raceID
-#   WHERE ra.raceID = ''' + str(raceID)
-#   query += ' AND r.runnerID = ' + str(runnerID)
-  
-#   current_app.logger.info(query)
-#   cursor = db.get_db().cursor()
-#   cursor.execute(query)
-#   column_headers = [x[0] for x in cursor.description]
-
-#   json_data = []
-#   the_data = cursor.fetchall()
-
-#   for row in the_data:
-#     json_data.append(dict(zip(column_headers, row)))
-#   return jsonify(json_data)
-
 # Upload race results of a specific runner
 @organizers.route('/results', methods=['POST'])
 def event_organizer_uploads_race_results():

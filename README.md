@@ -1,6 +1,8 @@
-# MySQL + Flask Boilerplate Project
+# MySQL + Flask CS3200 Semester Project - RaceReady
 
-This repo contains a boilerplate setup for spinning up 3 Docker containers: 
+RaceReady is an event organization application specifically tailored toward longer-distance running races (such as 5Ks, half-marathons, and full marathons). Compared to something like your typical high school track and field meet, these events require much more coordination and organization, as there are many more different parties involved – runners, volunteers, sponsors, and the event organizer (host) themselves, just to name a few – as well as more protocols that need to be put in place (formal registration, road closures, spectating, etc.). Overall, the stakes are much higher, and the smallest mistake (e.g., not having easy access to a phone number and consequently forgetting to make a call) can quickly derail these events. So, this app will ensure that all parties know and fulfill their responsibilities, and it will provide the necessary resources to proactively and reactively tackle issues that may arise. Thus, our users will always be RaceReady for each event.
+
+This repo contains a setup for spinning up 3 Docker containers: 
 1. A MySQL 8 container for obvious reasons
 1. A Python Flask container to implement a REST API
 1. A Local AppSmith Server

@@ -85,7 +85,7 @@ def get_registered_races(runnerID):
     return the_response
 
 # Remove a runner's registration for a race
-@runners.route('/runners/<raceID>/<runnerID>', methods=['DELETE'])
+@runners.route('/registrations/<raceID>/<runnerID>', methods=['DELETE'])
 def unregister_runner_for_race(raceID, runnerID):
     cursor = db.get_db().cursor()
     query = 'DELETE FROM Runner_RegistersFor_Race WHERE raceID = %s AND runnerID = %s'

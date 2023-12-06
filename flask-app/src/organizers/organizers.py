@@ -41,7 +41,7 @@ def get_vendor_details(vendorID):
 @organizers.route('/police/<raceID>', methods=['GET'])
 def get_police_department_names(raceID):
     query = '''
-      SELECT p.Name, p.phone
+      SELECT p.name, p.phone
       FROM Police AS p
       JOIN Organizer_CommunicatesWith_Police AS o
       ON p.policeID = o.policeID
@@ -239,80 +239,3 @@ def event_organizer_uploads_race_results():
     db.get_db().commit()
     
     return 'Successfuly uploaded race results for this runner!'
-
-# # Correct incorrectly uploaded time splits for a specific runner
-# @organizers.route('/results/<raceID>/<runnerID>', methods=['PUT'])
-# def event_organizer_update_race_results(raceID, runnerID):
-    
-#     the_data = request.json
-#     current_app.logger.info(the_data)
-    
-#     newFinishTime = the_data['finish_time']
-#     newMileSplit1 = the_data['mile_split_1']
-#     newMileSplit2 = the_data['mile_split_2']
-#     newMileSplit3 = the_data['mile_split_3']
-#     newMileSplit4 = the_data['mile_split_4']
-#     newMileSplit5 = the_data['mile_split_5']
-
-#     query = 'UPDATE RaceResults SET '
-#     query += 'finishTime = "' + str(newFinishTime) + '"'
-#     query += ' WHERE raceID = "' + str(raceID) + '" AND runnerID = "' + str(runnerID) + '"'
-    
-#     current_app.logger.info(query)
-
-#     # executing and committing the update statement 
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query)
-#     db.get_db().commit()
-
-#     query2 = 'UPDATE MileSplits SET '
-#     query2 += 'mileSplit = "' + str(newMileSplit1) + '"'
-#     query2 += ' WHERE raceID = "' + str(raceID) + '" AND runnerID = "' + str(runnerID) + '"'
-
-#     current_app.logger.info(query2)
-
-#     # executing and committing the update statement 
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query2)
-#     db.get_db().commit()
-
-#     query3 = 'UPDATE MileSplits SET '
-#     query3 += 'mileSplit = "' + str(newMileSplit2) + '"'
-#     query3 += ' WHERE raceID = "' + str(raceID) + '" AND runnerID = "' + str(runnerID) + '"'
-
-#     current_app.logger.info(query3)
-
-#     query4 = 'UPDATE MileSplits SET '
-#     query4 += 'mileSplit = "' + str(newMileSplit3) + '"'
-#     query4 += ' WHERE raceID = "' + str(raceID) + '" AND runnerID = "' + str(runnerID) + '"'
-
-#     current_app.logger.info(query4)
-
-#     # executing and committing the update statement 
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query4)
-#     db.get_db().commit()
-
-#     query5 = 'UPDATE MileSplits SET '
-#     query5 += 'mileSplit = "' + str(newMileSplit4) + '"'
-#     query5 += ' WHERE raceID = "' + str(raceID) + '" AND runnerID = "' + str(runnerID) + '"'
-
-#     current_app.logger.info(query5)
-
-#     # executing and committing the update statement 
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query5)
-#     db.get_db().commit()
-
-#     query6 = 'UPDATE MileSplits SET '
-#     query6 += 'mileSplit = "' + str(newMileSplit5) + '"'
-#     query6 += 'WHERE raceID = "' + str(raceID) + '" AND runnerID = "' + str(runnerID) + '"'
-
-#     current_app.logger.info(query6)
-
-#     # executing and committing the update statement 
-#     cursor = db.get_db().cursor()
-#     cursor.execute(query6)
-#     db.get_db().commit()
-    
-#     return 'Successfully updated the time splits!'

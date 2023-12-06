@@ -209,7 +209,11 @@ def get_result(raceID, runnerID):
 
 def get_races():
   query = '''
-  SELECT name, city, state, date, raceLength, raceID from Race
+  SELECT
+  r.name, r.street, r.city, r.state, r.country, r.zip, r.date,
+  r.terrainType, r.raceLength, r.maxRunners, r.checkInTime, r.raceID,
+  o.name AS "hosted by", o.email, o.phone
+  FROM Race AS r JOIN EventOrganizer AS o ON r.organizerID = o.organizerID
   '''
   current_app.logger.info(query)
   cursor = db.get_db().cursor()
@@ -225,7 +229,8 @@ def get_races():
     
   return jsonify(json_data)
 
-# Return more specific information about a specific race
+# Return more specific information about a specific race, including its
+# amenities and its event organizer (with contact information)
 @runners.route('/races/<raceID>', methods=['GET'])
 
 def get_specific_race(raceID):
@@ -233,7 +238,7 @@ def get_specific_race(raceID):
   SELECT
   r.name, r.street, r.city, r.state, r.country, r.zip, r.date, 
   r.terrainType, r.raceLength, r.maxRunners, r.checkInTime,
-  o.name AS "hosted by", fa.services, fa.venueSpot AS "first-aid venue spot",
+  o.name AS "hosted by", o.email, o.phone, fa.services, fa.venueSpot AS "first-aid venue spot",
   rs.amenities, rs.venueSpot AS "refuel station venue spot"
   FROM Race AS r JOIN EventOrganizer AS o ON r.organizerID = o.organizerID
   JOIN FirstAidStation AS fa ON r.raceID = fa.raceID
@@ -251,5 +256,15 @@ def get_specific_race(raceID):
   
   for row in theData:
     json_data.append(dict(zip(column_headers, row)))
+
+    if not json_data:
+        # If json_data is empty, return an error response
+        error_response = make_response(jsonify({"error": "Runner not registered for the specified race"}))
+        error_response.status_code = 418  # You can choose an appropriate status code
+        error_response.mimetype = 'application/json'
+        return error_response
     
-  return jsonify(json_data)
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response

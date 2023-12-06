@@ -18,7 +18,7 @@ def format_timedelta(td):
 runners = Blueprint('runners', __name__)
 
 # Check if runner is registered for certain race
-@runners.route('/runners/<raceID>/<runnerID>', methods=['GET'])
+@runners.route('/registrations/<raceID>/<runnerID>', methods=['GET'])
 def get_registered(raceID, runnerID):
     cursor = db.get_db().cursor()
     query = 'SELECT runnerID, raceID FROM Runner_RegistersFor_Race WHERE raceID = %s AND runnerID = %s'
@@ -43,7 +43,7 @@ def get_registered(raceID, runnerID):
     return the_response
 
 # Register runner for certain race
-@runners.route('/runners', methods=['POST'])
+@runners.route('/registrations', methods=['POST'])
 def register_runner_for_race():
     
     # collecting data from the request object 
@@ -67,8 +67,8 @@ def register_runner_for_race():
     
     return 'Success!'
 
-# get all the registered races by name
-@runners.route('/runners/<runnerID>', methods=['GET'])
+# get all the registered races by runner
+@runners.route('/registrations/<runnerID>', methods=['GET'])
 def get_registered_races(runnerID):
     cursor = db.get_db().cursor()
     query = 'SELECT Race.* from Runner_RegistersFor_Race JOIN Race on Runner_RegistersFor_Race.raceID = Race.raceID WHERE Runner_RegistersFor_Race.runnerID = %s;'
@@ -137,6 +137,7 @@ def checkin_runner_for_race():
     
     return 'Success!'
 
+# Get a runner's profile details
 @runners.route('/profiles/<runnerID>', methods=['GET'])
 def get_profile(runnerID):
     cursor = db.get_db().cursor()
@@ -152,6 +153,7 @@ def get_profile(runnerID):
     the_response.mimetype = 'application/json'
     return the_response 
 
+# Update a runner's profile details
 @runners.route('/profiles/<runnerID>', methods=['PUT'])
 def update_profile(runnerID):
     the_data = request.json

@@ -394,18 +394,18 @@ def create_post(raceID, sponsorID):
     current_app.logger.info(the_data)
 
     # Extracting the variables
-    overview = the_data['companyOverview']
-    link = the_data['websiteLink']
     race = the_data['raceID']
     sponsor = the_data['sponsorID']
+    overview = the_data['companyOverview']
+    link = the_data['websiteLink']
 
     # Constructing the query
 
     query = 'INSERT INTO Sponsor_Sponsors_Race VALUES ("'
-    query += str(overview) + '", "'
-    query += str(link) + '", "'
     query += str(race) + '", "'
-    query += str(sponsor) + '")'
+    query += str(sponsor) + '", "'
+    query += str(overview) + '", "'
+    query += str(link) + '")'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 

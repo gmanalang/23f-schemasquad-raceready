@@ -110,7 +110,7 @@ def get_checkedin(raceID, runnerID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Check in runner for certain race
+# Check a runner into a certain race
 @runners.route('/checkIns', methods=['POST'])
 def checkin_runner_for_race():
     

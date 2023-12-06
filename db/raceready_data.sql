@@ -830,11 +830,11 @@ INSERT INTO MileSplits VALUES(24,5706,43,48,'25K', '03:13:38');
 INSERT INTO MileSplits VALUES(18,1203,5,39,'30K', '02:00:44');
 INSERT INTO MileSplits VALUES(21,5410,4,4,'35K', '03:38:15');
 INSERT INTO MileSplits VALUES(43,1179,9,30,'40K', '01:41:14');
-INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 05', '00:35:32');
-INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 10', '01:09:45');
-INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 13.1', '01:29:13');
-INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 20', '02:16:24');
-INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 25', '02:49:59');
+-- INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 05', '00:35:32');
+-- INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 10', '01:09:45');
+-- INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 13.1', '01:29:13');
+-- INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 20', '02:16:24');
+-- INSERT INTO MileSplits VALUES(1,5000,51,51,'Mile 25', '02:49:59');
 
 -- Runner_RunsIn_Race sample data
 INSERT INTO Runner_RunsIn_Race VALUES(48,21);
@@ -1037,7 +1037,7 @@ INSERT INTO Runner_RunsIn_Race VALUES(39,5);
 INSERT INTO Runner_RunsIn_Race VALUES(17,14);
 INSERT INTO Runner_RunsIn_Race VALUES(32,30);
 INSERT INTO Runner_RunsIn_Race VALUES(18,30);
-INSERT INTO Runner_RunsIn_Race VALUES(1,51);
+-- INSERT INTO Runner_RunsIn_Race VALUES(1,51);
 
 -- Runner_ChecksInto_Race sample data
 INSERT INTO Runner_ChecksInto_Race VALUES(48,21,9078);
@@ -1240,7 +1240,7 @@ INSERT INTO Runner_ChecksInto_Race VALUES(39,5,9078);
 INSERT INTO Runner_ChecksInto_Race VALUES(17,14,7875);
 INSERT INTO Runner_ChecksInto_Race VALUES(32,30,3735);
 INSERT INTO Runner_ChecksInto_Race VALUES(18,30,3560);
-INSERT INTO Runner_ChecksInto_Race VALUES(1,51,5000);
+-- INSERT INTO Runner_ChecksInto_Race VALUES(1,51,5000);
 
 -- Runner_RegistersFor_Race sample data
 INSERT INTO Runner_RegistersFor_Race VALUES(6,1);
@@ -1443,7 +1443,7 @@ INSERT INTO Runner_RegistersFor_Race VALUES(41,32);
 INSERT INTO Runner_RegistersFor_Race VALUES(48,7);
 INSERT INTO Runner_RegistersFor_Race VALUES(34,49);
 INSERT INTO Runner_RegistersFor_Race VALUES(3,45);
-INSERT INTO Runner_RegistersFor_Race VALUES(1,51);
+-- INSERT INTO Runner_RegistersFor_Race VALUES(1,51);
 
 -- Volunteer_ChecksInto_Race sample data
 INSERT INTO Volunteer_ChecksInto_Race VALUES(26,46);

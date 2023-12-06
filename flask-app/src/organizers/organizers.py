@@ -40,16 +40,9 @@ def get_vendor_details(vendorID):
 # Get all police departments assisting a specific race
 @organizers.route('/police/<raceID>', methods=['GET'])
 def get_police_department_names(raceID):
-    query = '''
-      SELECT p.name, p.phone
-      FROM Police AS p
-      JOIN Organizer_CommunicatesWith_Police AS o
-      ON p.policeID = o.policeID
-      JOIN EventOrganizer AS org
-      ON o.organizerID = org.organizerID
-      JOIN Race AS r
-      ON org.organizerID = r.organizerID
-      WHERE r.raceID = ''' + str(raceID)
+    query = '''SELECT p.name, p.phone FROM Police AS p JOIN Organizer_CommunicatesWith_Police 
+    AS o ON p.policeID = o.policeID JOIN EventOrganizer AS org ON o.organizerID = org.organizerID 
+    JOIN Race AS r ON org.organizerID = r.organizerID WHERE r.raceID = ''' + str(raceID)
     
     current_app.logger.info(query)
     cursor = db.get_db().cursor()

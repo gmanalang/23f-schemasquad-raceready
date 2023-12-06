@@ -76,6 +76,7 @@ def get_contact_of_vol(raceID, volunteerID):
     WHERE raceID = ''' + str(raceID) + ''' AND
     vol.volunteerID = ''' + str(volunteerID)
 
+    current_app.logger.info(query)
     cursor = db.get_db().cursor()
     cursor.execute(query)
 
@@ -237,6 +238,7 @@ def get_contacts_of_vol(raceID):
     ON Volunteer_RegistersFor_Race.volunteerID = vol.volunteerID
     WHERE raceID = ''' + str(raceID)
 
+    current_app.logger.info(query)
     cursor = db.get_db().cursor()
     cursor.execute(query)
 

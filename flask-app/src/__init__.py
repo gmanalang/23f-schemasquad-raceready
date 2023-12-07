@@ -30,11 +30,9 @@ def create_app():
     # Example: localhost:8001
     @app.route("/")
     def welcome():
-        return "<h1>Welcome to the 3200 boilerplate app</h1>"
+        return "<h1>Welcome to the CS 3200 RaceReady app</h1>"
 
     # Import the various Beluprint Objects
-    from src.originalExamples.customers.customers import customers
-    from src.originalExamples.products.products  import products
     from src.organizers.organizers import organizers
     from src.nonrunners.nonrunners import nonrunners;
     from src.runners.runners import runners;
@@ -42,8 +40,6 @@ def create_app():
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
-    app.register_blueprint(customers,   url_prefix='/c')
-    app.register_blueprint(products,    url_prefix='/p')
     app.register_blueprint(organizers, url_prefix='/org')
     app.register_blueprint(runners, url_prefix='/run')
     app.register_blueprint(nonrunners, url_prefix='/nonrun')

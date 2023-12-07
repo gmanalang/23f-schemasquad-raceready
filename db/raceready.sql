@@ -1,11 +1,10 @@
-CREATE DATABASE RaceReady;
-SHOW DATABASES;
+DROP DATABASE IF EXISTS `RaceReady`;
+CREATE DATABASE IF NOT EXISTS `RaceReady`;
+
+GRANT ALL PRIVILEGES ON RaceReady.* TO 'webapp'@'%';
+flush privileges;
+
 USE RaceReady;
-
-
-CREATE USER 'race_ready'@'%' IDENTIFIED BY 'temp_password';
-GRANT ALL PRIVILEGES ON RaceReady.* TO 'race_ready'@'%';
-
 
 CREATE TABLE Runner
 (
